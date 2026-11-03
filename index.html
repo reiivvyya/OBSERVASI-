@@ -5,70 +5,126 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Do You Love Me? 💗</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{min-height:100vh;overflow:hidden;font-family:'Segoe UI',sans-serif;background:radial-gradient(circle at center,#52152f,#180817 75%);color:white;display:flex;justify-content:center;align-items:center}
-.bg{position:fixed;inset:0;pointer-events:none;overflow:hidden}
-.heart{position:absolute;bottom:-50px;color:#ff4d91;animation:floatUp linear infinite;text-shadow:0 0 15px #ff1768,0 0 30px #ff1768}
-@keyframes floatUp{from{transform:translateY(0) rotate(0deg);opacity:0}15%{opacity:1}to{transform:translateY(-110vh) rotate(360deg);opacity:0}}
-.card{width:90%;max-width:390px;padding:40px 25px;text-align:center;border:1px solid rgba(255,120,180,.4);border-radius:28px;background:linear-gradient(145deg,rgba(255,255,255,.13),rgba(255,50,130,.07));box-shadow:0 0 30px rgba(255,30,120,.25),inset 0 0 25px rgba(255,255,255,.05);backdrop-filter:blur(15px);transform:perspective(1000px) rotateX(3deg);animation:appear 1s ease;z-index:2}
-@keyframes appear{from{opacity:0;transform:translateY(30px) scale(.8)}to{opacity:1;transform:translateY(0) scale(1)}}
-.main-heart{font-size:75px;margin-bottom:20px;filter:drop-shadow(0 0 20px #ff277b);animation:beat 1s infinite}
-@keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
-h1{font-size:30px;margin-bottom:15px;text-shadow:0 0 15px #ff4d91}
-.subtitle{color:#ffc4dc;font-size:14px;margin-bottom:30px}
-.buttons{display:flex;justify-content:center;gap:15px}
-button{border:none;padding:13px 32px;border-radius:50px;font-size:16px;font-weight:bold;cursor:pointer;transition:.3s}
-.yes{background:linear-gradient(135deg,#ff3c8c,#ff80b5);color:white;box-shadow:0 0 20px #ff3c8c}
-.no{background:#fff;color:#e82e73}
-button:hover{transform:scale(1.12);box-shadow:0 0 25px #ff4d91}
-.message{display:none;width:90%;max-width:420px;text-align:center;z-index:3;animation:appear 1s ease}
-.message h1{font-size:34px;color:#ff8fbd}
-.message p{color:#ffe0ed;line-height:2;font-size:16px;margin:20px 0}
-.message .big-heart{font-size:100px;animation:beat 1s infinite;filter:drop-shadow(0 0 25px #ff3c8c)}
-.no-page{display:none;position:fixed;inset:0;z-index:5;background:radial-gradient(ellipse at center,#65102f,#18030f 75%);align-items:center;justify-content:center;flex-direction:column;text-align:center;overflow:hidden}
-.love-small{color:#ffb4d0;font-size:23px;font-weight:bold;letter-spacing:4px;text-shadow:0 0 15px #ff277b;margin-bottom:25px;animation:glow 1.5s infinite alternate}
-.big-love{font-size:clamp(48px,13vw,100px);font-weight:1000;color:#ff477f;letter-spacing:2px;text-shadow:0 0 10px #ff1e70,0 0 25px #ff1e70,0 0 50px #ff1e70,0 0 90px #ff0066;animation:loveBeat 1.5s infinite}
-.love-bottom{margin-top:30px;color:#ffd2e3;font-size:16px;text-shadow:0 0 15px #ff4d91}
-@keyframes loveBeat{0%,100%{transform:scale(1);filter:brightness(1)}50%{transform:scale(1.12);filter:brightness(1.5)}}
-@keyframes glow{from{opacity:.6}to{opacity:1}}
-.love-particle{position:absolute;color:#ff4d91;font-size:25px;animation:floatUp 5s linear infinite;text-shadow:0 0 20px #ff0066}
-@media(max-width:400px){.card{padding:35px 18px}h1{font-size:26px}}
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--pink:#ff6fa9;--deep:#260b20;--cream:#fff0f5}
+body{min-height:100vh;overflow-x:hidden;font-family:Georgia,'Times New Roman',serif;color:#fff;background:radial-gradient(circle at 50% 35%,#70294d 0,#32132d 48%,#140916 100%);display:flex;align-items:center;justify-content:center;padding:24px 14px}
+.bg{position:fixed;inset:0;overflow:hidden;pointer-events:none}
+.heart{position:absolute;bottom:-50px;color:#ff75ad;animation:floatUp linear forwards;text-shadow:0 0 14px #ff2d83}
+@keyframes floatUp{0%{transform:translateY(0) rotate(0);opacity:0}15%{opacity:.9}100%{transform:translateY(-115vh) rotate(360deg);opacity:0}}
+.screen{position:relative;z-index:2;width:100%;display:flex;align-items:center;justify-content:center}
+.card{width:min(410px,94vw);padding:38px 24px;text-align:center;border:1px solid #ff9bc455;border-radius:28px;background:linear-gradient(145deg,#ffffff20,#ff4f9b0d);box-shadow:0 18px 60px #08020b80,0 0 35px #ff398b25,inset 0 0 25px #ffffff0b;backdrop-filter:blur(15px);animation:appear .8s ease}
+@keyframes appear{from{opacity:0;transform:translateY(24px) scale(.94)}to{opacity:1;transform:none}}
+.main-heart{font-size:76px;filter:drop-shadow(0 0 20px #ff368c);animation:beat 1.2s infinite;margin-bottom:14px}
+@keyframes beat{50%{transform:scale(1.15)}}
+h1{font-size:clamp(27px,7vw,36px);text-shadow:0 0 18px #ff5a9d;margin-bottom:12px}
+.subtitle{color:#ffd0e3;margin:12px 0 28px;font:15px/1.7 Arial,sans-serif}
+.buttons{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+button{font: bold 15px Arial,sans-serif;border:0;border-radius:30px;padding:13px 27px;cursor:pointer;transition:.25s}
+button:hover{transform:translateY(-3px) scale(1.04);filter:brightness(1.1)}
+.yes{color:white;background:linear-gradient(135deg,#ff3989,#ff91bc);box-shadow:0 7px 22px #ff398966}
+.no{color:#bd2865;background:#fff0f6}
+.hidden{display:none!important}
+
+/* Interactive book */
+.book-wrap{width:min(560px,96vw);text-align:center;animation:appear .7s ease}
+.book-heading{font:14px Arial,sans-serif;letter-spacing:3px;text-transform:uppercase;color:#ffd0e3;margin-bottom:16px}
+.book{position:relative;width:100%;min-height:390px;padding:25px;border-radius:8px 22px 22px 8px;background:linear-gradient(110deg,#f8d9e5 0,#fff2f5 8%,#fff7f4 50%,#f7dce7 100%);color:#67334d;box-shadow:12px 16px 0 #8d365e55,0 22px 55px #08020b88,inset 8px 0 12px #a54e7022;transform:perspective(1100px) rotateY(-2deg);overflow:hidden}
+.book:before{content:"";position:absolute;left:18px;top:0;bottom:0;width:2px;background:#e7b7ca;box-shadow:4px 0 8px #b66a8a33}
+.book:after{content:"";position:absolute;right:9px;top:10px;bottom:10px;width:5px;background:repeating-linear-gradient(to bottom,#e9bdce 0 2px,#fff5f7 2px 4px);opacity:.8}
+.book-inner{position:relative;z-index:1;min-height:335px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px 20px 18px 30px}
+.book-kicker{font:11px Arial,sans-serif;letter-spacing:3px;color:#b35b80;text-transform:uppercase;margin-bottom:17px}
+.book-title{font-size:clamp(30px,8vw,43px);line-height:1.12;color:#a83268;text-shadow:1px 2px #fff}
+.book-heart{font-size:40px;margin:15px 0;filter:drop-shadow(0 0 8px #ff82b2)}
+.book-copy{font:16px/1.85 Georgia,serif;color:#71445a;max-width:390px;white-space:pre-line}
+.book-page-number{font:12px Arial,sans-serif;color:#b87994;margin-top:20px}
+.book-controls{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;margin-top:23px}
+.book-controls button{font-size:13px;padding:11px 18px}
+.nav{background:#ff78ad;color:white;box-shadow:0 5px 16px #ff438755}
+.secondary{background:#fff0f6;color:#a83268}
+.chapter-list{display:flex;justify-content:center;gap:7px;flex-wrap:wrap;margin-top:14px}
+.chapter-list button{padding:8px 12px;font-size:11px;background:#ffffff18;color:#ffe1ed;border:1px solid #ffb3d055}
+.chapter-list button.active{background:#ff6fa9;color:#fff}
+.hint{font:12px/1.6 Arial,sans-serif;color:#ffd0e3;margin-top:13px}
+.flip{animation:pageFlip .42s ease}
+@keyframes pageFlip{0%{opacity:.35;transform:perspective(900px) rotateY(-9deg) translateX(10px)}100%{opacity:1;transform:none}}
+
+/* No screen */
+.no-page{position:fixed;inset:0;z-index:5;background:radial-gradient(ellipse at center,#701333,#18030f 75%);display:none;align-items:center;justify-content:center;flex-direction:column;text-align:center;overflow:hidden;padding:20px}
+.love-small{color:#ffc1d9;font: bold 20px Arial,sans-serif;letter-spacing:3px;text-shadow:0 0 15px #ff277b;margin-bottom:25px}
+.big-love{font:1000 clamp(48px,13vw,100px)/1 Arial,sans-serif;color:#ff477f;letter-spacing:1px;text-shadow:0 0 10px #ff1e70,0 0 25px #ff1e70,0 0 50px #ff1e70,0 0 90px #ff0066;animation:loveBeat 1.5s infinite}
+.love-bottom{margin-top:28px;color:#ffd2e3;font:15px Arial,sans-serif;text-shadow:0 0 15px #ff4d91}
+@keyframes loveBeat{50%{transform:scale(1.1);filter:brightness(1.4)}}
+.love-particle{position:absolute;color:#ff70a7;font-size:25px;animation:floatUp 6s linear infinite;text-shadow:0 0 20px #ff0066}
+.love-rain{position:absolute;top:-100px;left:0;z-index:1;pointer-events:none;white-space:nowrap;
+  font-family:Arial,sans-serif;font-weight:1000;color:#ff8ab8;
+  text-shadow:0 0 8px #ff2878,0 0 18px #ff176b,0 0 30px #ff176b;
+  animation:loveFall linear forwards;opacity:0}
+@keyframes loveFall{
+  0%{transform:translate3d(0,-10vh,0) rotate(var(--tilt));opacity:0}
+  10%{opacity:1}
+  85%{opacity:1}
+  100%{transform:translate3d(var(--drift),115vh,0) rotate(calc(var(--tilt) + 35deg));opacity:0}
+}
+.no-page .love-small,.no-page .big-love,.no-page .love-bottom{position:relative;z-index:3}
+.no-page .big-love{max-width:100%;padding:0 8px;line-height:1.15;overflow-wrap:anywhere}
+@media(max-width:420px){.book{min-height:420px;padding:17px}.book-inner{min-height:380px;padding-left:24px}.book-copy{font-size:15px}.book-controls{gap:7px}.book-controls button{padding:10px 14px}}
 </style>
 </head>
 <body>
 <div class="bg" id="background"></div>
+
+<!-- Ganti file MP3 dengan nama file musik yang kamu upload ke repository. -->
 <audio id="loveMusic" src="ssstik.io_1793708472255.mp3" preload="auto" loop></audio>
 
-<div class="card" id="mainCard">
-  <div class="main-heart">💗</div>
-  <h1>Do You Love Me?</h1>
-  <p class="subtitle">I have something to ask you...</p>
-  <div class="buttons">
-    <button class="yes" onclick="chooseYes()">YES 💗</button>
-    <button class="no" onclick="chooseNo()">NO 🤍</button>
-  </div>
-</div>
+<main class="screen">
+  <section class="card" id="mainCard">
+    <div class="main-heart">💗</div>
+    <h1>Do You Love Me?</h1>
+    <p class="subtitle">I have a little question for you...<br>Choose honestly. 💌</p>
+    <div class="buttons">
+      <button class="yes" onclick="chooseYes()">YES 💗</button>
+      <button class="no" onclick="chooseNo()">NO 🤍</button>
+    </div>
+  </section>
 
-<div class="message" id="yesPage">
-  <div class="big-heart">💖</div>
-  <h1>YAYYYY! I LOVE YOU! 💗</h1>
-  <p>
-    Thank you for choosing YES!<br>
-    You make my world more beautiful.<br>
-    Every little moment with you is special.<br>
-    I hope we can make more memories together.<br><br>
-    You're my favorite person. ❤️
-  </p>
-  <h2 style="color:#ff9ac4;text-shadow:0 0 15px #ff277b">I LOVE YOU SO MUCH!</h2>
-</div>
+  <section class="book-wrap hidden" id="bookWrap">
+    <div class="book-heading">✦ a little book made for you ✦</div>
+    <article class="book" id="book">
+      <div class="book-inner" id="bookInner">
+        <div class="book-kicker">A tiny love story</div>
+        <div class="book-title">For You,<br>My Favorite Person</div>
+        <div class="book-heart">💗</div>
+        <p class="book-copy">Ada beberapa hal kecil yang ingin aku ceritakan kepadamu...</p>
+        <div class="book-page-number">COVER</div>
+      </div>
+    </article>
+    <div class="book-controls">
+      <button class="secondary" id="prevBtn" onclick="previousPage()">← BACK</button>
+      <button class="nav" id="nextBtn" onclick="nextPage()">OPEN BOOK →</button>
+    </div>
+    <div class="chapter-list" id="chapterList"></div>
+    <p class="hint">Buka halaman satu per satu, atau pilih bab yang kamu mau. ✨</p>
+  </section>
+</main>
 
-<div class="no-page" id="noPage">
+<section class="no-page" id="noPage">
   <div class="love-small">LOVE YOU BANYAK 💗</div>
   <div class="big-love">LOVE YOU</div>
   <div class="love-bottom">More than words can ever explain ❤️</div>
-</div>
+</section>
 
 <script>
+const pages = [
+  {title:"A Little Hello", kicker:"CHAPTER 01", heart:"🌷", text:"Hai, kamu.\n\nKalau kamu sedang membaca halaman ini, berarti kamu sudah membuka sesuatu yang aku siapkan khusus untukmu.\n\nSemoga hari ini ada alasan kecil yang membuatmu tersenyum."},
+  {title:"You Are Special", kicker:"CHAPTER 02", heart:"💗", text:"Ada banyak orang di dunia ini, tapi setiap orang punya cara sendiri untuk menjadi istimewa.\n\nDan kamu punya caramu sendiri.\n\nTerima kasih sudah menjadi dirimu, dengan segala cerita dan hal-hal kecil yang membuatmu berbeda."},
+  {title:"Little Things", kicker:"CHAPTER 03", heart:"🦋", text:"Aku suka hal-hal sederhana:\n\nObrolan yang tiba-tiba panjang, tawa karena hal receh, pesan singkat yang datang di waktu yang tepat, dan momen kecil yang akhirnya jadi kenangan.\n\nKadang, hal sederhana justru paling berarti."},
+  {title:"My Wish For You", kicker:"CHAPTER 04", heart:"🌙", text:"Aku berharap kamu selalu punya keberanian untuk mengejar hal yang kamu impikan.\n\nSemoga langkahmu dimudahkan, hatimu dikuatkan, dan kamu selalu dikelilingi hal-hal baik.\n\nJangan lupa, kamu pantas mendapatkan kebahagiaan."},
+  {title:"One More Thing", kicker:"CHAPTER 05", heart:"❤️", text:"Kalau suatu hari kamu lupa betapa berharganya dirimu, buka lagi halaman ini.\n\nKamu berharga. Ceritamu berarti. Dan kehadiranmu bisa membuat dunia seseorang terasa lebih berwarna.\n\nThank you for being you."},
+  {title:"The End? Never.", kicker:"THE LAST PAGE", heart:"💞", text:"Ini memang halaman terakhir dari buku kecil ini...\n\nTapi bukan berarti ceritanya harus selesai.\n\nMasih banyak tawa, cerita, dan kenangan baik yang bisa kita temukan.\n\nSending you lots of love! 💗"}
+];
+
+let currentPage = -1;
+
 function createHearts(){
   const bg=document.getElementById("background");
   setInterval(()=>{
@@ -76,36 +132,118 @@ function createHearts(){
     heart.className="heart";
     heart.textContent=["💗","💕","💖","❤️","♥"][Math.floor(Math.random()*5)];
     heart.style.left=Math.random()*100+"vw";
-    heart.style.fontSize=(15+Math.random()*25)+"px";
-    heart.style.animationDuration=(4+Math.random()*5)+"s";
+    heart.style.fontSize=(15+Math.random()*24)+"px";
+    heart.style.animationDuration=(5+Math.random()*5)+"s";
     bg.appendChild(heart);
-    setTimeout(()=>heart.remove(),9000);
-  },300);
+    setTimeout(()=>heart.remove(),10500);
+  },450);
 }
 createHearts();
 
 function chooseYes(){
-  document.getElementById("mainCard").style.display="none";
-  document.getElementById("yesPage").style.display="block";
+  document.getElementById("mainCard").classList.add("hidden");
+  document.getElementById("bookWrap").classList.remove("hidden");
+  renderPage();
+}
+
+function renderPage(){
+  const inner=document.getElementById("bookInner");
+  const prev=document.getElementById("prevBtn");
+  const next=document.getElementById("nextBtn");
+  const list=document.getElementById("chapterList");
+
+  inner.classList.remove("flip");
+  void inner.offsetWidth;
+
+  if(currentPage===-1){
+    inner.innerHTML=`
+      <div class="book-kicker">A tiny love story</div>
+      <div class="book-title">For You,<br>My Favorite Person</div>
+      <div class="book-heart">💗</div>
+      <p class="book-copy">Ada beberapa hal kecil yang ingin aku ceritakan kepadamu...</p>
+      <div class="book-page-number">COVER</div>`;
+    prev.disabled=true;
+    prev.style.opacity=".45";
+    next.textContent="OPEN BOOK →";
+  }else{
+    const p=pages[currentPage];
+    inner.innerHTML=`
+      <div class="book-kicker">${p.kicker}</div>
+      <div class="book-title">${p.title}</div>
+      <div class="book-heart">${p.heart}</div>
+      <p class="book-copy">${p.text}</p>
+      <div class="book-page-number">— ${currentPage+1} / ${pages.length} —</div>`;
+    prev.disabled=false;
+    prev.style.opacity="1";
+    next.textContent=currentPage===pages.length-1?"READ AGAIN ↻":"NEXT PAGE →";
+  }
+  inner.classList.add("flip");
+
+  list.innerHTML="";
+  pages.forEach((p,i)=>{
+    const b=document.createElement("button");
+    b.textContent=String(i+1);
+    b.className=currentPage===i?"active":"";
+    b.setAttribute("aria-label","Buka "+p.title);
+    b.onclick=()=>{currentPage=i;renderPage()};
+    list.appendChild(b);
+  });
+}
+
+function nextPage(){
+  if(currentPage===pages.length-1){
+    currentPage=-1;
+  }else{
+    currentPage++;
+  }
+  renderPage();
+}
+function previousPage(){
+  if(currentPage>0) currentPage--;
+  else currentPage=-1;
+  renderPage();
 }
 
 function chooseNo(){
   const music=document.getElementById("loveMusic");
   music.currentTime=0;
-  music.play().catch(error=>console.log("Audio gagal diputar:",error));
-
-  document.getElementById("mainCard").style.display="none";
+  music.play().catch(error=>console.log("Audio tidak dapat diputar:",error));
+  document.querySelector(".screen").classList.add("hidden");
   document.getElementById("noPage").style.display="flex";
 
-  for(let i=0;i<35;i++){
+  const noPage=document.getElementById("noPage");
+
+  // Banyak tulisan LOVE YOU berjatuhan memenuhi layar.
+  function makeLoveRain(){
+    const word=document.createElement("div");
+    word.className="love-rain";
+    word.textContent=["LOVE","LOVE YOU","I LOVE YOU","LOVE YOU 💗"][Math.floor(Math.random()*4)];
+    word.style.left=Math.random()*88+"vw";
+    word.style.fontSize=(17+Math.random()*27)+"px";
+    word.style.animationDuration=(4+Math.random()*4)+"s";
+    word.style.setProperty("--drift",(Math.random()*160-80)+"px");
+    word.style.setProperty("--tilt",(Math.random()*36-18)+"deg");
+    noPage.appendChild(word);
+    setTimeout(()=>word.remove(),8500);
+  }
+
+  // Buat banyak tulisan sekaligus saat layar NO muncul.
+  for(let i=0;i<42;i++){
+    setTimeout(makeLoveRain, i*75);
+  }
+  // Terus munculkan tulisan baru sampai layar penuh.
+  setInterval(makeLoveRain,150);
+
+  // Hati kecil juga ikut berjatuhan.
+  for(let i=0;i<24;i++){
     const heart=document.createElement("div");
     heart.className="love-particle";
     heart.textContent="♥";
     heart.style.left=Math.random()*100+"vw";
     heart.style.bottom="-40px";
-    heart.style.animationDuration=(4+Math.random()*5)+"s";
+    heart.style.animationDuration=(5+Math.random()*5)+"s";
     heart.style.animationDelay=Math.random()*4+"s";
-    document.getElementById("noPage").appendChild(heart);
+    noPage.appendChild(heart);
   }
 }
 </script>
