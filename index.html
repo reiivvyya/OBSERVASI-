@@ -1,238 +1,113 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Do You Love Me?</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap');
-
-    * { box-sizing: border-box; }
-    :root { --pink: #ff5c9a; --deep: #ff2e70; }
-    body {
-      margin: 0; min-height: 100vh; overflow: hidden; color: white;
-      font-family: 'DM Sans', sans-serif;
-      background:
-        radial-gradient(ellipse at 50% 42%, rgba(255,95,157,.23), transparent 36%),
-        radial-gradient(ellipse at 15% 15%, rgba(119,74,180,.25), transparent 35%),
-        linear-gradient(135deg, #090817, #190d29 55%, #090817);
-      display: grid; place-items: center;
-    }
-    #stars, #hearts { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
-    .star { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: #fff; opacity: .55; animation: twinkle 2.5s infinite alternate; }
-    @keyframes twinkle { to { opacity: .12; transform: scale(.5); } }
-    .scene { perspective: 1100px; width: min(92vw, 520px); z-index: 2; }
-    .card {
-      position: relative; padding: 48px 28px 38px; text-align: center;
-      border: 1px solid rgba(255,255,255,.18); border-radius: 30px;
-      background: linear-gradient(145deg, rgba(255,255,255,.14), rgba(255,255,255,.045));
-      box-shadow: 0 35px 90px rgba(0,0,0,.42), inset 0 1px rgba(255,255,255,.2), 0 0 55px rgba(255,76,143,.12);
-      backdrop-filter: blur(18px); transform: rotateX(5deg) rotateY(-5deg);
-      transition: transform .5s ease, opacity .5s ease;
-    }
-    .card:hover { transform: rotateX(0) rotateY(0) translateY(-4px); }
-    .mini-heart { font-size: 42px; filter: drop-shadow(0 0 16px #ff4f91); animation: beat 1.2s infinite; }
-    @keyframes beat { 50% { transform: scale(1.18); } }
-    h1 { font: 700 clamp(32px, 8vw, 48px) 'Playfair Display', serif; margin: 16px 0 10px; text-shadow: 0 4px 25px #ff4b91; }
-    .sub { color: #e8d9e8; font-size: 15px; line-height: 1.6; margin: 0 auto 28px; max-width: 340px; }
-    .buttons { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
-    button {
-      border: 0; cursor: pointer; border-radius: 999px; padding: 13px 30px;
-      font: 700 16px 'DM Sans', sans-serif; transition: transform .2s, box-shadow .2s;
-    }
-    button:hover { transform: translateY(-4px) scale(1.04); }
-    .yes { color: #fff; background: linear-gradient(135deg, #ff75ad, #ff347b); box-shadow: 0 10px 28px rgba(255,52,123,.4); }
-    .no { color: #fff; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25); }
-    .hidden { display: none !important; }
-    #answer h1 { font-size: clamp(30px, 7vw, 43px); }
-    .message { color: #f5ddeb; line-height: 1.9; font-size: 16px; }
-    .next { margin-top: 25px; color: white; background: linear-gradient(135deg, #a76bff, #ff5aab); box-shadow: 0 10px 30px #b44bba55; }
-    .back { margin-top: 12px; display: block; margin-inline: auto; background: transparent; color: #d9c8dc; font-size: 13px; padding: 8px 16px; }
-    .love-screen {
-      position: fixed; inset: 0; z-index: 5; display: grid; place-items: center;
-      background: radial-gradient(circle, rgba(255,40,115,.2), transparent 48%), rgba(10,5,19,.92);
-      animation: appear .7s ease both;
-    }
-    @keyframes appear { from { opacity: 0; } to { opacity: 1; } }
-    .love-center { position: relative; text-align: center; transform-style: preserve-3d; animation: float 3s ease-in-out infinite; }
-    @keyframes float { 50% { transform: translateY(-12px) rotateY(5deg); } }
-    .big-love {
-      font: 700 clamp(58px, 15vw, 112px) 'Playfair Display', serif;
-      color: #fff; letter-spacing: 2px;
-      text-shadow: 0 0 8px #fff, 0 0 22px #ff4b91, 0 0 48px #ff2d75, 0 0 90px #ff2d75;
-      animation: glow 1.8s ease-in-out infinite alternate;
-    }
-    @keyframes glow { to { text-shadow: 0 0 12px #fff, 0 0 35px #ff75b0, 0 0 75px #ff2d75, 0 0 125px #ff2d75; } }
-    .love-caption { color: #ffc6dd; letter-spacing: 5px; font-size: 12px; margin-top: 15px; }
-    .floating-word {
-      position: absolute; white-space: nowrap; color: #ff8db8; font-weight: 700;
-      text-shadow: 0 0 12px #ff2878; opacity: 0; animation: rise 4.5s linear forwards;
-    }
-    @keyframes rise { 0% { opacity: 0; transform: translateY(30px) scale(.7) rotate(-8deg); } 15% { opacity: .95; } 100% { opacity: 0; transform: translateY(-110vh) scale(1.3) rotate(8deg); } }
-    .tiny-heart { position: absolute; color: #ff4c91; font-size: 22px; text-shadow: 0 0 15px #ff2d75; animation: drift 5s linear forwards; }
-    @keyframes drift { from { transform: translateY(20px) scale(.5) rotate(0); opacity: 0; } 15% { opacity: 1; } to { transform: translateY(-105vh) scale(1.6) rotate(180deg); opacity: 0; } }
-    .music-note { color: #ffd0e2; font-size: 12px; letter-spacing: 2px; margin-top: 22px; opacity: .85; }
-    .again { position: fixed; bottom: 25px; z-index: 7; color: #fff; background: rgba(255,255,255,.12); border: 1px solid #ffffff44; }
-    @media (max-width: 480px) { .card { padding: 38px 22px 30px; } }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Do You Love Me? 💗</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{min-height:100vh;overflow:hidden;font-family:'Segoe UI',sans-serif;background:radial-gradient(circle at center,#52152f,#180817 75%);color:white;display:flex;justify-content:center;align-items:center}
+.bg{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+.heart{position:absolute;bottom:-50px;color:#ff4d91;animation:floatUp linear infinite;text-shadow:0 0 15px #ff1768,0 0 30px #ff1768}
+@keyframes floatUp{from{transform:translateY(0) rotate(0deg);opacity:0}15%{opacity:1}to{transform:translateY(-110vh) rotate(360deg);opacity:0}}
+.card{width:90%;max-width:390px;padding:40px 25px;text-align:center;border:1px solid rgba(255,120,180,.4);border-radius:28px;background:linear-gradient(145deg,rgba(255,255,255,.13),rgba(255,50,130,.07));box-shadow:0 0 30px rgba(255,30,120,.25),inset 0 0 25px rgba(255,255,255,.05);backdrop-filter:blur(15px);transform:perspective(1000px) rotateX(3deg);animation:appear 1s ease;z-index:2}
+@keyframes appear{from{opacity:0;transform:translateY(30px) scale(.8)}to{opacity:1;transform:translateY(0) scale(1)}}
+.main-heart{font-size:75px;margin-bottom:20px;filter:drop-shadow(0 0 20px #ff277b);animation:beat 1s infinite}
+@keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+h1{font-size:30px;margin-bottom:15px;text-shadow:0 0 15px #ff4d91}
+.subtitle{color:#ffc4dc;font-size:14px;margin-bottom:30px}
+.buttons{display:flex;justify-content:center;gap:15px}
+button{border:none;padding:13px 32px;border-radius:50px;font-size:16px;font-weight:bold;cursor:pointer;transition:.3s}
+.yes{background:linear-gradient(135deg,#ff3c8c,#ff80b5);color:white;box-shadow:0 0 20px #ff3c8c}
+.no{background:#fff;color:#e82e73}
+button:hover{transform:scale(1.12);box-shadow:0 0 25px #ff4d91}
+.message{display:none;width:90%;max-width:420px;text-align:center;z-index:3;animation:appear 1s ease}
+.message h1{font-size:34px;color:#ff8fbd}
+.message p{color:#ffe0ed;line-height:2;font-size:16px;margin:20px 0}
+.message .big-heart{font-size:100px;animation:beat 1s infinite;filter:drop-shadow(0 0 25px #ff3c8c)}
+.no-page{display:none;position:fixed;inset:0;z-index:5;background:radial-gradient(ellipse at center,#65102f,#18030f 75%);align-items:center;justify-content:center;flex-direction:column;text-align:center;overflow:hidden}
+.love-small{color:#ffb4d0;font-size:23px;font-weight:bold;letter-spacing:4px;text-shadow:0 0 15px #ff277b;margin-bottom:25px;animation:glow 1.5s infinite alternate}
+.big-love{font-size:clamp(48px,13vw,100px);font-weight:1000;color:#ff477f;letter-spacing:2px;text-shadow:0 0 10px #ff1e70,0 0 25px #ff1e70,0 0 50px #ff1e70,0 0 90px #ff0066;animation:loveBeat 1.5s infinite}
+.love-bottom{margin-top:30px;color:#ffd2e3;font-size:16px;text-shadow:0 0 15px #ff4d91}
+@keyframes loveBeat{0%,100%{transform:scale(1);filter:brightness(1)}50%{transform:scale(1.12);filter:brightness(1.5)}}
+@keyframes glow{from{opacity:.6}to{opacity:1}}
+.love-particle{position:absolute;color:#ff4d91;font-size:25px;animation:floatUp 5s linear infinite;text-shadow:0 0 20px #ff0066}
+@media(max-width:400px){.card{padding:35px 18px}h1{font-size:26px}}
+</style>
 </head>
 <body>
-  <div id="stars"></div>
-  <div id="hearts"></div>
+<div class="bg" id="background"></div>
+<audio id="loveMusic" src="ssstik.io_1793708472255.mp3" preload="auto" loop></audio>
 
-  <main class="scene" id="mainScene">
-    <section class="card" id="question">
-      <div class="mini-heart">♡</div>
-      <h1>Do you love me?</h1>
-      <p class="sub">I have one little question for you…<br>Choose honestly. 💗</p>
-      <div class="buttons">
-        <button class="yes" onclick="chooseYes()">YES ♡</button>
-        <button class="no" onclick="chooseNo()">NO</button>
-      </div>
-    </section>
+<div class="card" id="mainCard">
+  <div class="main-heart">💗</div>
+  <h1>Do You Love Me?</h1>
+  <p class="subtitle">I have something to ask you...</p>
+  <div class="buttons">
+    <button class="yes" onclick="chooseYes()">YES 💗</button>
+    <button class="no" onclick="chooseNo()">NO 🤍</button>
+  </div>
+</div>
 
-    <section class="card hidden" id="answer">
-      <div class="mini-heart">💗</div>
-      <h1>Then let me tell you something…</h1>
-      <p class="message">
-        You make ordinary days feel a little more magical.<br>
-        If I could choose one person to make more memories with,<br>
-        I would still choose you. Every single time. ♡<br><br>
-        Thank you for being my favorite notification,<br>
-        my sweetest thought, and my little reason to smile.
-      </p>
-      <button class="next" onclick="showFinal()">One more thing… ✨</button>
-      <button class="back" onclick="resetPage()">← Start again</button>
-    </section>
-  </main>
+<div class="message" id="yesPage">
+  <div class="big-heart">💖</div>
+  <h1>YAYYYY! I LOVE YOU! 💗</h1>
+  <p>
+    Thank you for choosing YES!<br>
+    You make my world more beautiful.<br>
+    Every little moment with you is special.<br>
+    I hope we can make more memories together.<br><br>
+    You're my favorite person. ❤️
+  </p>
+  <h2 style="color:#ff9ac4;text-shadow:0 0 15px #ff277b">I LOVE YOU SO MUCH!</h2>
+</div>
 
-  <section class="love-screen hidden" id="loveScreen">
-    <div class="love-center">
-      <div class="big-love">LOVE YOU</div>
-      <div class="love-caption">MORE THAN WORDS CAN SAY ♡</div><div class="music-note">♫ a little love melody for you ♫</div>
-    </div>
-    <button class="again" onclick="resetPage()">Replay ♡</button>
-  </section>
+<div class="no-page" id="noPage">
+  <div class="love-small">LOVE YOU BANYAK 💗</div>
+  <div class="big-love">LOVE YOU</div>
+  <div class="love-bottom">More than words can ever explain ❤️</div>
+</div>
 
-  <script>
-    // Little stars in the background
-    const stars = document.getElementById('stars');
-    for (let i = 0; i < 85; i++) {
-      const s = document.createElement('span');
-      s.className = 'star';
-      s.style.left = Math.random() * 100 + '%';
-      s.style.top = Math.random() * 100 + '%';
-      s.style.animationDelay = Math.random() * 3 + 's';
-      stars.appendChild(s);
-    }
+<script>
+function createHearts(){
+  const bg=document.getElementById("background");
+  setInterval(()=>{
+    const heart=document.createElement("div");
+    heart.className="heart";
+    heart.textContent=["💗","💕","💖","❤️","♥"][Math.floor(Math.random()*5)];
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.fontSize=(15+Math.random()*25)+"px";
+    heart.style.animationDuration=(4+Math.random()*5)+"s";
+    bg.appendChild(heart);
+    setTimeout(()=>heart.remove(),9000);
+  },300);
+}
+createHearts();
 
-    function chooseYes() {
-      document.getElementById('question').classList.add('hidden');
-      document.getElementById('answer').classList.remove('hidden');
-    }
+function chooseYes(){
+  document.getElementById("mainCard").style.display="none";
+  document.getElementById("yesPage").style.display="block";
+}
 
-    let audioContext = null;
-    let musicTimer = null;
-    let musicStep = 0;
-    const melody = [523.25, 659.25, 783.99, 659.25, 587.33, 698.46, 880.00, 698.46];
-    const chords = [
-      [261.63, 329.63, 392.00],
-      [220.00, 261.63, 329.63],
-      [174.61, 220.00, 261.63],
-      [196.00, 246.94, 293.66]
-    ];
+function chooseNo(){
+  const music=document.getElementById("loveMusic");
+  music.currentTime=0;
+  music.play().catch(error=>console.log("Audio gagal diputar:",error));
 
-    function playTone(freq, start, duration, volume, type = 'sine') {
-      const osc = audioContext.createOscillator();
-      const gain = audioContext.createGain();
-      osc.type = type;
-      osc.frequency.setValueAtTime(freq, start);
-      gain.gain.setValueAtTime(0.0001, start);
-      gain.gain.exponentialRampToValueAtTime(volume, start + 0.12);
-      gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
-      osc.connect(gain);
-      gain.connect(audioContext.destination);
-      osc.start(start);
-      osc.stop(start + duration + 0.03);
-    }
+  document.getElementById("mainCard").style.display="none";
+  document.getElementById("noPage").style.display="flex";
 
-    function startRomanticMusic() {
-      try {
-        const AudioCtx = window.AudioContext || window.webkitAudioContext;
-        if (!AudioCtx) return;
-        if (!audioContext) audioContext = new AudioCtx();
-        if (audioContext.state === 'suspended') audioContext.resume();
-
-        if (musicTimer) clearInterval(musicTimer);
-        musicStep = 0;
-        const playBar = () => {
-          const now = audioContext.currentTime + 0.04;
-          const chord = chords[Math.floor(musicStep / 4) % chords.length];
-          chord.forEach((note, i) => playTone(note, now + i * 0.025, 1.7, 0.025, 'triangle'));
-          playTone(melody[musicStep % melody.length], now, 0.85, 0.055, 'sine');
-          playTone(melody[(musicStep + 2) % melody.length] / 2, now + 0.45, 1.1, 0.025, 'sine');
-          musicStep++;
-        };
-        playBar();
-        musicTimer = setInterval(playBar, 900);
-      } catch (e) {
-        // The visual love animation still works if the browser blocks audio.
-      }
-    }
-
-    function stopRomanticMusic() {
-      if (musicTimer) clearInterval(musicTimer);
-      musicTimer = null;
-      if (audioContext && audioContext.state !== 'closed') {
-        audioContext.close();
-        audioContext = null;
-      }
-    }
-
-    function chooseNo() {
-      document.getElementById('mainScene').classList.add('hidden');
-      document.getElementById('loveScreen').classList.remove('hidden');
-      startLoveRain();
-      startRomanticMusic();
-    }
-
-    function showFinal() {
-      document.getElementById('mainScene').classList.add('hidden');
-      document.getElementById('loveScreen').classList.remove('hidden');
-      startLoveRain();
-      startRomanticMusic();
-    }
-
-    let rainTimer;
-    function startLoveRain() {
-      const layer = document.getElementById('hearts');
-      clearInterval(rainTimer);
-      function spawn() {
-        const word = document.createElement('span');
-        word.className = Math.random() > .35 ? 'floating-word' : 'tiny-heart';
-        word.textContent = word.className === 'floating-word'
-          ? ['LOVE YOU', 'I LOVE YOU', '♡ LOVE ♡', 'FOREVER', 'YOU + ME'][Math.floor(Math.random() * 5)]
-          : '♥';
-        word.style.left = Math.random() * 95 + '%';
-        word.style.bottom = '-35px';
-        word.style.fontSize = (14 + Math.random() * 25) + 'px';
-        word.style.animationDuration = (3.2 + Math.random() * 2.5) + 's';
-        layer.appendChild(word);
-        setTimeout(() => word.remove(), 6000);
-      }
-      for (let i = 0; i < 18; i++) setTimeout(spawn, i * 100);
-      rainTimer = setInterval(spawn, 180);
-    }
-
-    function resetPage() {
-      stopRomanticMusic();
-      clearInterval(rainTimer);
-      document.getElementById('hearts').innerHTML = '';
-      document.getElementById('loveScreen').classList.add('hidden');
-      document.getElementById('mainScene').classList.remove('hidden');
-      document.getElementById('question').classList.remove('hidden');
-      document.getElementById('answer').classList.add('hidden');
-    }
-  </script>
+  for(let i=0;i<35;i++){
+    const heart=document.createElement("div");
+    heart.className="love-particle";
+    heart.textContent="♥";
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.bottom="-40px";
+    heart.style.animationDuration=(4+Math.random()*5)+"s";
+    heart.style.animationDelay=Math.random()*4+"s";
+    document.getElementById("noPage").appendChild(heart);
+  }
+}
+</script>
 </body>
 </html>
